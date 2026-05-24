@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#000000"/>
 <title>crss5G</title>
 <link rel="icon" href="https://avatars.githubusercontent.com/hxfuxyy" type="image/png"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -27,6 +27,26 @@ body{
   overflow-x:hidden;cursor:none;
 }
 @media(hover:none){body{cursor:auto}}
+
+.splash{
+  position:fixed;inset:0;z-index:1000;background:#000;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:opacity .7s ease;
+}
+.splash.hidden{opacity:0;pointer-events:none}
+.splash-text{
+  font-family:'Press Start 2P',monospace;
+  font-size:clamp(.85rem,3.5vw,1.25rem);
+  color:#fff;letter-spacing:.05em;
+  animation:splashBlink 2s steps(1) infinite;
+}
+@keyframes splashBlink{0%,48%{opacity:1}50%,98%{opacity:.3}100%{opacity:1}}
+
+.page-guard{
+  position:fixed;inset:0;z-index:999;pointer-events:all;
+}
+.page-guard.off{display:none}
+
 .cursor-dot,.cursor-ring{
   position:fixed;top:0;left:0;pointer-events:none;z-index:9999;border-radius:50%;
   transform:translate(-50%,-50%);will-change:transform;
@@ -34,39 +54,33 @@ body{
 .cursor-dot{width:5px;height:5px;background:#fff;box-shadow:0 0 6px rgba(255,255,255,.8)}
 .cursor-ring{width:26px;height:26px;border:1px solid rgba(255,255,255,.5);opacity:.6;transition:width .18s var(--ease-o),height .18s var(--ease-o),opacity .18s ease}
 body.chov .cursor-ring{width:38px;height:38px;opacity:.25}
+
 .bg-wrap{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .bg-glow{position:absolute;border-radius:50%;filter:blur(120px);will-change:transform}
-.bg-glow-1{width:550px;height:550px;background:rgba(0, 255, 204, 0.05);top:-180px;left:-100px;animation:g1 18s ease-in-out infinite alternate}
-.bg-glow-2{width:450px;height:450px;background:rgba(255, 32, 96, 0.04);bottom:-140px;right:-80px;animation:g2 15s ease-in-out infinite alternate}
-.bg-glow-3{width:400px;height:400px;background:rgba(192, 64, 255, 0.05);top:35%;left:35%;animation:g3 22s ease-in-out infinite alternate}
-.bg-grid {
-  position: absolute;
-  inset: -100px;
-  z-index: 1;
-  pointer-events: none;
-  background-image: 
-    linear-gradient(rgba(192, 64, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(192, 64, 255, 0.04) 1px, transparent 1px);
-  background-size: 50px 50px;
-  background-position: center;
-  transform: perspective(600px) rotateX(65deg) translateY(0);
-  transform-origin: top;
-  animation: gridScroll 8s linear infinite;
-  opacity: 0.65;
+.bg-glow-1{width:550px;height:550px;background:rgba(0,255,204,0.022);top:-180px;left:-100px;animation:g1 18s ease-in-out infinite alternate}
+.bg-glow-2{width:450px;height:450px;background:rgba(255,32,96,0.018);bottom:-140px;right:-80px;animation:g2 15s ease-in-out infinite alternate}
+.bg-glow-3{width:400px;height:400px;background:rgba(192,64,255,0.022);top:35%;left:35%;animation:g3 22s ease-in-out infinite alternate}
+.bg-grid{
+  position:absolute;inset:-100px;z-index:1;pointer-events:none;
+  background-image:linear-gradient(rgba(192,64,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(192,64,255,0.03) 1px,transparent 1px);
+  background-size:50px 50px;background-position:center;
+  transform:perspective(600px) rotateX(65deg) translateY(0);transform-origin:top;
+  animation:gridScroll 8s linear infinite;opacity:.5;
 }
 @keyframes g1{0%{transform:translate(0,0) scale(1)}100%{transform:translate(80px,100px) scale(1.1)}}
 @keyframes g2{0%{transform:translate(0,0) scale(1)}100%{transform:translate(-70px,-90px) scale(1.08)}}
 @keyframes g3{0%{transform:translate(0,0) scale(1)}100%{transform:translate(60px,-60px) scale(1.15)}}
-@keyframes gridScroll {
-  0% { transform: perspective(600px) rotateX(65deg) translateY(0) skewX(0); filter: none; }
-  23% { transform: perspective(600px) rotateX(65deg) translateY(115px) skewX(0); filter: none; }
-  23.2% { transform: perspective(600px) rotateX(65deg) translateY(115px) skewX(3deg); filter: hue-rotate(90deg) contrast(1.5); }
-  23.4% { transform: perspective(600px) rotateX(65deg) translateY(115px) skewX(0); filter: none; }
-  58% { transform: perspective(600px) rotateX(65deg) translateY(290px) skewX(0); filter: none; }
-  58.2% { transform: perspective(600px) rotateX(65deg) translateY(290px) skewX(-4deg) scaleY(1.02); filter: hue-rotate(270deg); }
-  58.4% { transform: perspective(600px) rotateX(65deg) translateY(290px) skewX(0); filter: none; }
-  100% { transform: perspective(600px) rotateX(65deg) translateY(500px) skewX(0); filter: none; }
+@keyframes gridScroll{
+  0%{transform:perspective(600px) rotateX(65deg) translateY(0) skewX(0);filter:none}
+  23%{transform:perspective(600px) rotateX(65deg) translateY(115px) skewX(0);filter:none}
+  23.2%{transform:perspective(600px) rotateX(65deg) translateY(115px) skewX(3deg);filter:hue-rotate(90deg) contrast(1.5)}
+  23.4%{transform:perspective(600px) rotateX(65deg) translateY(115px) skewX(0);filter:none}
+  58%{transform:perspective(600px) rotateX(65deg) translateY(290px) skewX(0);filter:none}
+  58.2%{transform:perspective(600px) rotateX(65deg) translateY(290px) skewX(-4deg) scaleY(1.02);filter:hue-rotate(270deg)}
+  58.4%{transform:perspective(600px) rotateX(65deg) translateY(290px) skewX(0);filter:none}
+  100%{transform:perspective(600px) rotateX(65deg) translateY(500px) skewX(0);filter:none}
 }
+
 .page{position:relative;z-index:10;width:100%;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 16px}
 .card{
   width:100%;max-width:420px;background:var(--card-bg);border:1px solid var(--card-border);
@@ -75,9 +89,10 @@ body.chov .cursor-ring{width:38px;height:38px;opacity:.25}
   backdrop-filter:blur(24px) saturate(1.2);-webkit-backdrop-filter:blur(24px) saturate(1.2);
   box-shadow:0 0 0 .5px var(--card-border),0 32px 80px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.07);
   opacity:0;transform:translateY(20px);
-  animation:cIn .65s .05s var(--ease-s) forwards, cardGlitch 15s steps(1) infinite;
+  animation:cIn .65s .05s var(--ease-s) forwards,cardGlitch 15s steps(1) infinite;
 }
 @keyframes cIn{to{opacity:1;transform:translateY(0)}}
+
 .avatar-wrap{position:relative;width:110px;height:110px;margin-bottom:18px;flex-shrink:0}
 .avatar-ring{
   position:absolute;inset:-5px;border-radius:50%;
@@ -96,20 +111,21 @@ body.chov .cursor-ring{width:38px;height:38px;opacity:.25}
   animation:avatarGlitch 5s steps(1) infinite;
 }
 .avatar:hover{transform:scale(1.04);box-shadow:0 0 30px rgba(255,255,255,.15),0 0 60px rgba(255,255,255,.06)}
-.name{font-size:2rem;font-weight:800;letter-spacing:-.03em;color:#fff;line-height:1;margin-bottom:12px;text-shadow:0 0 40px rgba(255,255,255,.15);animation:textGlitch 3.5s steps(1) infinite}
-.badges{
-  display:flex;align-items:center;gap:0;
-  border:1px solid rgba(255,255,255,.14);border-radius:999px;
-  padding:6px 14px;margin-bottom:14px;
-  background:rgba(255,255,255,.04);backdrop-filter:blur(8px);
+
+.name{font-size:2rem;font-weight:800;letter-spacing:-.03em;color:#fff;line-height:1;margin-bottom:16px;text-shadow:0 0 40px rgba(255,255,255,.15);animation:textGlitch 3.5s steps(1) infinite}
+
+.bio{
+  font-size:.78rem;font-weight:400;color:var(--text-muted);letter-spacing:.01em;
+  line-height:1.55;text-align:center;margin-bottom:22px;
+  min-height:1.3em;
 }
-.badge{
-  width:26px;height:26px;display:flex;align-items:center;justify-content:center;
-  color:rgba(255,255,255,.65);border-radius:50%;cursor:default;
-  transition:color .2s ease,transform .2s var(--ease-s);
+.bio-cursor{
+  display:inline-block;width:2px;height:.85em;
+  background:rgba(255,255,255,.55);margin-left:1px;vertical-align:text-bottom;
+  animation:blinkCur .65s steps(1) infinite;
 }
-.badge:hover{color:#fff;transform:scale(1.2)}
-.bio{font-size:.78rem;font-weight:400;color:var(--text-muted);letter-spacing:.01em;line-height:1.5;text-align:center;margin-bottom:22px}
+@keyframes blinkCur{0%,49%{opacity:1}50%,100%{opacity:0}}
+
 .social-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;margin-bottom:14px}
 .social-btn{
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;
@@ -122,8 +138,8 @@ body.chov .cursor-ring{width:38px;height:38px;opacity:.25}
   position:relative;overflow:hidden;
   animation:btnGlitch 7s steps(1) infinite;
 }
-.social-grid a:nth-child(2) { animation-delay: 1.5s; }
-.social-grid a:nth-child(3) { animation-delay: 3s; }
+.social-grid a:nth-child(2){animation-delay:1.5s}
+.social-grid a:nth-child(3){animation-delay:3s}
 .social-btn:hover{
   background:var(--btn-hover-bg);border-color:var(--btn-hover-border);color:#fff;
   transform:translateY(-3px) scale(1.03);
@@ -136,137 +152,97 @@ body.chov .cursor-ring{width:38px;height:38px;opacity:.25}
   animation:rip .5s var(--ease-o) forwards;
 }
 @keyframes rip{to{transform:scale(4.5);opacity:0}}
-.gh-card {
-  width:100%; border:1px solid var(--card-border); border-radius:16px;
-  padding:18px 20px; margin-bottom:10px; background:rgba(255,255,255,.03);
-  transition:border-color .2s ease, box-shadow .2s ease;
-  display: flex; gap: 16px; align-items: stretch;
-  position: relative; overflow: hidden;
-  backdrop-filter: blur(12px);
-  text-decoration: none; cursor: none;
-}
-.gh-card:hover {
-  border-color: var(--card-border-h);
-  box-shadow: 0 0 20px rgba(255,255,255,.05);
-}
-.gh-card-left {
-  flex: 1.1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-width: 0;
-}
-.gh-card-right {
-  flex: 0.9;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  min-width: 0;
-  position: relative;
-}
-.gh-username {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 12px;
-}
-.gh-username svg {
-  color: rgba(255,255,255,0.7);
-}
-.gh-stat-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.gh-stat-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  white-space: nowrap;
-}
-.gh-stat-item svg {
-  color: rgba(255, 255, 255, 0.4);
-  flex-shrink: 0;
-}
-.gh-stat-val {
-  font-weight: 700;
-  color: #fff;
-}
-.gh-chart-container {
-  width: 100%;
-  height: 60px;
-  position: relative;
-}
-.gh-chart-container svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-.gh-chart-path {
-  stroke-dasharray: 200;
-  stroke-dashoffset: 200;
-  animation: drawChart 2s ease-out forwards;
-}
-@keyframes drawChart {
-  to { stroke-dashoffset: 0; }
-}
-.gh-chart-label {
-  font-size: 0.55rem;
-  color: var(--text-sub);
-  text-align: right;
-  margin-top: 4px;
-}
-.player-card{
+
+.gh-card{
   width:100%;border:1px solid var(--card-border);border-radius:16px;
+  padding:18px 20px;margin-bottom:10px;background:rgba(255,255,255,.03);
+  transition:border-color .2s ease,box-shadow .2s ease;
+  display:flex;gap:16px;align-items:stretch;
+  position:relative;overflow:hidden;
+  backdrop-filter:blur(12px);
+  text-decoration:none;cursor:none;
+}
+.gh-card:hover{border-color:var(--card-border-h);box-shadow:0 0 20px rgba(255,255,255,.05)}
+.gh-card-left{flex:1.1;display:flex;flex-direction:column;justify-content:space-between;min-width:0}
+.gh-card-right{flex:0.9;display:flex;flex-direction:column;justify-content:flex-end;min-width:0;position:relative}
+.gh-username{font-size:1.05rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.gh-username svg{color:rgba(255,255,255,0.7)}
+.gh-stat-list{display:flex;flex-direction:column;gap:8px}
+.gh-stat-item{display:flex;align-items:center;gap:8px;font-size:.72rem;color:var(--text-muted);white-space:nowrap}
+.gh-stat-item svg{color:rgba(255,255,255,0.4);flex-shrink:0}
+.gh-stat-val{font-weight:700;color:#fff}
+.gh-chart-container{width:100%;height:60px;position:relative}
+.gh-chart-container svg{width:100%;height:100%;overflow:visible}
+.gh-chart-path{stroke-dasharray:200;stroke-dashoffset:200;animation:drawChart 2s ease-out forwards}
+@keyframes drawChart{to{stroke-dashoffset:0}}
+.gh-chart-label{font-size:.55rem;color:var(--text-sub);text-align:right;margin-top:4px}
+
+.player-card{
+  width:100%;border:1px solid var(--card-border);border-radius:18px;
   padding:14px 16px;background:rgba(255,255,255,.03);
   display:flex;align-items:center;gap:12px;
-  transition:border-color .2s ease;
-  animation:cardGlitch 12s steps(1) infinite;
-  animation-delay: 2.5s;
+  transition:border-color .2s ease,box-shadow .2s ease;
+  animation:cardGlitch 12s steps(1) infinite;animation-delay:2.5s;
+  position:relative;overflow:hidden;
 }
-.player-card:hover{border-color:var(--card-border-h)}
+.player-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.025) 0%,transparent 55%);
+  pointer-events:none;
+}
+.player-card:hover{border-color:var(--card-border-h);box-shadow:0 0 22px rgba(255,255,255,.04)}
+
 .player-vol{
-  flex-shrink:0;width:32px;height:32px;border-radius:8px;
+  flex-shrink:0;width:30px;height:30px;border-radius:8px;
   background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-  color:rgba(255,255,255,.55);cursor:none;display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.45);cursor:none;display:flex;align-items:center;justify-content:center;
   transition:background .2s ease,color .2s ease,transform .2s var(--ease-s);
   outline:none;-webkit-tap-highlight-color:transparent;
 }
 .player-vol:hover{background:rgba(255,255,255,.12);color:#fff;transform:scale(1.08)}
-.player-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
-.player-track{font-size:.78rem;font-weight:500;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.player-bar-wrap{display:flex;align-items:center;gap:8px}
-.player-time,.player-dur{font-size:.6rem;color:var(--text-sub);font-variant-numeric:tabular-nums;flex-shrink:0;min-width:26px}
+
+.player-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+.player-meta{display:flex;flex-direction:column;gap:1px;min-width:0}
+.player-date{font-size:.62rem;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-track{font-size:.8rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-bar-wrap{display:flex;align-items:center;gap:7px}
+.player-time,.player-dur{font-size:.58rem;color:var(--text-sub);font-variant-numeric:tabular-nums;flex-shrink:0;min-width:24px}
 .player-dur{text-align:right}
-.player-bar{flex:1;height:3px;border-radius:999px;background:rgba(255,255,255,.12);position:relative;cursor:pointer}
-.player-prog{height:100%;border-radius:999px;background:#fff;width:0%;transition:width .25s linear}
+.player-bar{
+  flex:1;height:3px;border-radius:999px;background:rgba(255,255,255,.1);
+  position:relative;cursor:pointer;transition:height .15s ease;
+}
+.player-bar:hover{height:5px}
+.player-prog{
+  height:100%;border-radius:999px;background:#fff;width:0%;
+  transition:width .25s linear;
+  box-shadow:0 0 8px rgba(255,255,255,.35);
+}
 .player-thumb{
-  position:absolute;top:50%;width:9px;height:9px;border-radius:50%;
+  position:absolute;top:50%;width:10px;height:10px;border-radius:50%;
   background:#fff;transform:translate(-50%,-50%);left:0%;
   opacity:0;transition:opacity .2s ease,left .25s linear;
-  box-shadow:0 0 6px rgba(255,255,255,.5);
+  box-shadow:0 0 8px rgba(255,255,255,.6);
 }
 .player-bar:hover .player-thumb{opacity:1}
-.player-controls{display:flex;align-items:center;gap:4px;flex-shrink:0}
+
+.player-controls{display:flex;align-items:center;gap:2px;flex-shrink:0}
 .player-btn{
-  width:30px;height:30px;border-radius:8px;background:transparent;border:none;
-  color:rgba(255,255,255,.5);cursor:none;display:flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:7px;background:transparent;border:none;
+  color:rgba(255,255,255,.45);cursor:none;display:flex;align-items:center;justify-content:center;
   transition:color .2s ease,background .2s ease,transform .2s var(--ease-s);
   outline:none;-webkit-tap-highlight-color:transparent;
 }
 .player-btn:hover{color:#fff;background:rgba(255,255,255,.07);transform:scale(1.1)}
 .player-btn:active{transform:scale(0.92)}
 .player-play{
-  width:36px;height:36px;border-radius:50%;
+  width:34px;height:34px;border-radius:50%;
   background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff;
 }
 .player-play:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.4);transform:scale(1.08)}
+
 a,button{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user-select:none}
+
 @media(max-width:480px){
   .page{padding:24px 12px;align-items:flex-start;padding-top:44px}
   .card{padding:36px 18px 26px;border-radius:20px}
@@ -276,124 +252,87 @@ a,button{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user
   body{cursor:auto}
 }
 
-/* --- Breakcore Glitch Overlay Styles --- */
-.glitch-overlay {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
+.glitch-overlay{position:fixed;inset:0;pointer-events:none}
+.h-scanlines{
+  z-index:99;
+  background:repeating-linear-gradient(0deg,transparent 0px,transparent 2px,rgba(0,0,0,.18) 2px,rgba(0,0,0,.18) 4px);
+  opacity:.65;
 }
-.h-scanlines {
-  z-index: 99;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent 0px,
-    transparent 2px,
-    rgba(0, 0, 0, 0.18) 2px,
-    rgba(0, 0, 0, 0.18) 4px
-  );
-  opacity: 0.65;
+.black-flicker{z-index:100;background:transparent;animation:blackStrobe 4s steps(1) infinite}
+.chromatic-flicker{z-index:97;background:transparent;animation:chromStrobe 2.5s steps(1) infinite}
+.sweep-line{
+  left:0;width:100%;height:2px;z-index:96;
+  background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.6) 50%,rgba(255,255,255,0) 100%);
+  box-shadow:0 0 10px rgba(255,255,255,.6),0 0 20px rgba(192,64,255,.4);
+  opacity:0;animation:lineSweep 5s cubic-bezier(0.2,0.8,0.2,1) infinite;
 }
-.black-flicker {
-  z-index: 100;
-  background: transparent;
-  animation: blackStrobe 4s steps(1) infinite;
-}
-.chromatic-flicker {
-  z-index: 97;
-  background: transparent;
-  animation: chromStrobe 2.5s steps(1) infinite;
-}
-.sweep-line {
-  left: 0;
-  width: 100%;
-  height: 2px;
-  z-index: 96;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0) 100%);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(192, 64, 255, 0.4);
-  opacity: 0;
-  animation: lineSweep 5s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
-}
-.noise-svg {
-  position: fixed;
-  inset: 0;
-  z-index: 95;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  opacity: .07;
-  mix-blend-mode: overlay;
-}
+.noise-svg{position:fixed;inset:0;z-index:95;width:100%;height:100%;pointer-events:none;opacity:.07;mix-blend-mode:overlay}
 
-@keyframes blackStrobe {
-  0%, 9%, 11.1%, 19.9%, 20.6%, 34.9%, 35.6%, 49.9%, 50.4%, 64.9%, 65.4%, 79.9%, 80.4%, 89.9%, 90.4%, 100% { background: transparent; }
-  10% { background: rgba(0, 0, 0, 0.98); }
-  20% { background: rgba(0, 0, 0, 0.96); }
-  20.3% { background: rgba(0, 0, 0, 0.90); }
-  35% { background: rgba(0, 0, 0, 0.97); }
-  50% { background: rgba(0, 0, 0, 0.94); }
-  50.2% { background: rgba(0, 0, 0, 0.97); }
-  65% { background: rgba(0, 0, 0, 0.96); }
-  80% { background: rgba(0, 0, 0, 0.95); }
-  90% { background: rgba(0, 0, 0, 0.98); }
-  90.2% { background: rgba(0, 0, 0, 0.93); }
+@keyframes blackStrobe{
+  0%,9%,11.1%,19.9%,20.6%,34.9%,35.6%,49.9%,50.4%,64.9%,65.4%,79.9%,80.4%,89.9%,90.4%,100%{background:transparent}
+  10%{background:rgba(0,0,0,.98)}
+  20%{background:rgba(0,0,0,.96)}
+  20.3%{background:rgba(0,0,0,.9)}
+  35%{background:rgba(0,0,0,.97)}
+  50%{background:rgba(0,0,0,.94)}
+  50.2%{background:rgba(0,0,0,.97)}
+  65%{background:rgba(0,0,0,.96)}
+  80%{background:rgba(0,0,0,.95)}
+  90%{background:rgba(0,0,0,.98)}
+  90.2%{background:rgba(0,0,0,.93)}
 }
-
-@keyframes chromStrobe {
-  0%, 7%, 9.1%, 22%, 24.1%, 39%, 41.1%, 57%, 59.1%, 74%, 76.1%, 89%, 91.1%, 100% { background: transparent; }
-  8% { background: rgba(255, 0, 128, 0.15); }
-  23% { background: rgba(0, 255, 255, 0.15); }
-  40% { background: rgba(192, 64, 255, 0.18); }
-  58% { background: rgba(255, 32, 96, 0.12); }
-  75% { background: rgba(0, 255, 0, 0.08); }
-  90% { background: rgba(255, 255, 0, 0.1); }
+@keyframes chromStrobe{
+  0%,7%,9.1%,22%,24.1%,39%,41.1%,57%,59.1%,74%,76.1%,89%,91.1%,100%{background:transparent}
+  8%{background:rgba(255,0,128,.15)}
+  23%{background:rgba(0,255,255,.15)}
+  40%{background:rgba(192,64,255,.18)}
+  58%{background:rgba(255,32,96,.12)}
+  75%{background:rgba(0,255,0,.08)}
+  90%{background:rgba(255,255,0,.1)}
 }
-
-@keyframes lineSweep {
-  0% { top: -2%; opacity: 0; }
-  1% { opacity: 0.7; }
-  8% { top: 102%; opacity: 0; }
-  100% { top: 102%; opacity: 0; }
+@keyframes lineSweep{
+  0%{top:-2%;opacity:0}1%{opacity:.7}8%{top:102%;opacity:0}100%{top:102%;opacity:0}
 }
-
-@keyframes cardGlitch {
-  0%, 19%, 21.1%, 39%, 41.1%, 59%, 61.1%, 79%, 81.1%, 93.9%, 94.6%, 95.9%, 96.4%, 100% { transform: translate(0, 0) scale(1); filter: none; }
-  20% { transform: translate(-5px, 3px) skewX(4deg); filter: hue-rotate(45deg) saturate(1.8); }
-  40% { transform: translate(4px, -4px) skewY(-2deg); filter: hue-rotate(135deg) invert(0.08); }
-  60% { transform: translate(-3px, -5px) scale(0.97); filter: hue-rotate(225deg) contrast(1.4); }
-  80% { transform: translate(5px, 2px) skewX(-3deg); filter: hue-rotate(315deg); }
-  94% { transform: translate(-6px, 4px) skewY(3deg); filter: hue-rotate(90deg) saturate(2); }
-  96% { transform: translate(6px, -3px) scale(1.02); filter: hue-rotate(270deg) invert(0.1); }
+@keyframes cardGlitch{
+  0%,19%,21.1%,39%,41.1%,59%,61.1%,79%,81.1%,93.9%,94.6%,95.9%,96.4%,100%{transform:translate(0,0) scale(1);filter:none}
+  20%{transform:translate(-5px,3px) skewX(4deg);filter:hue-rotate(45deg) saturate(1.8)}
+  40%{transform:translate(4px,-4px) skewY(-2deg);filter:hue-rotate(135deg) invert(.08)}
+  60%{transform:translate(-3px,-5px) scale(.97);filter:hue-rotate(225deg) contrast(1.4)}
+  80%{transform:translate(5px,2px) skewX(-3deg);filter:hue-rotate(315deg)}
+  94%{transform:translate(-6px,4px) skewY(3deg);filter:hue-rotate(90deg) saturate(2)}
+  96%{transform:translate(6px,-3px) scale(1.02);filter:hue-rotate(270deg) invert(.1)}
 }
-
-@keyframes textGlitch {
-  0%, 14%, 16.1%, 34%, 36.1%, 54%, 56.1%, 74%, 76.1%, 91.9%, 92.6%, 94.9%, 95.4%, 100% { text-shadow: 0 0 40px rgba(255,255,255,.15); }
-  15% { text-shadow: -5px -2px #00ffcc, 5px 2px #ff2060, 0 0 10px #c040ff; }
-  35% { text-shadow: 4px 3px #00ffcc, -4px -3px #ff2060; }
-  55% { text-shadow: -3px 4px #c040ff, 3px -4px #ff2060; }
-  75% { text-shadow: 5px -5px #c040ff, -5px 5px #00ffcc; }
-  92% { text-shadow: -6px 0 #ff00c1, 6px 0 #00fff9; }
-  95% { text-shadow: 4px -4px #00ffcc, -4px 4px #ff2060; }
+@keyframes textGlitch{
+  0%,14%,16.1%,34%,36.1%,54%,56.1%,74%,76.1%,91.9%,92.6%,94.9%,95.4%,100%{text-shadow:0 0 40px rgba(255,255,255,.15)}
+  15%{text-shadow:-5px -2px #00ffcc,5px 2px #ff2060,0 0 10px #c040ff}
+  35%{text-shadow:4px 3px #00ffcc,-4px -3px #ff2060}
+  55%{text-shadow:-3px 4px #c040ff,3px -4px #ff2060}
+  75%{text-shadow:5px -5px #c040ff,-5px 5px #00ffcc}
+  92%{text-shadow:-6px 0 #ff00c1,6px 0 #00fff9}
+  95%{text-shadow:4px -4px #00ffcc,-4px 4px #ff2060}
 }
-
-@keyframes avatarGlitch {
-  0%, 19%, 21.1%, 49%, 51.1%, 79%, 81.1%, 100% { border-color: rgba(255,255,255,.18); transform: translate(0, 0) scale(1); filter: none; }
-  20% { filter: hue-rotate(180deg) saturate(2); transform: translate(-4px, 3px) scale(0.95); border-color: #00ffcc; }
-  50% { filter: contrast(3) invert(0.08); transform: translate(4px, -3px) scale(1.06); border-color: #ff2060; }
-  80% { filter: sepia(1) hue-rotate(90deg); transform: translate(-3px, -4px) scale(0.97); border-color: #c040ff; }
+@keyframes avatarGlitch{
+  0%,19%,21.1%,49%,51.1%,79%,81.1%,100%{border-color:rgba(255,255,255,.18);transform:translate(0,0) scale(1);filter:none}
+  20%{filter:hue-rotate(180deg) saturate(2);transform:translate(-4px,3px) scale(.95);border-color:#00ffcc}
+  50%{filter:contrast(3) invert(.08);transform:translate(4px,-3px) scale(1.06);border-color:#ff2060}
+  80%{filter:sepia(1) hue-rotate(90deg);transform:translate(-3px,-4px) scale(.97);border-color:#c040ff}
 }
-
-@keyframes btnGlitch {
-  0%, 93.9%, 94.6%, 95.9%, 96.4%, 100% { transform: translate(0, 0) scale(1); filter: none; }
-  94% { transform: translate(-3px, 2px) skewX(3deg); filter: hue-rotate(60deg); }
-  96% { transform: translate(3px, -2px) scale(1.02); filter: hue-rotate(-60deg); }
+@keyframes btnGlitch{
+  0%,93.9%,94.6%,95.9%,96.4%,100%{transform:translate(0,0) scale(1);filter:none}
+  94%{transform:translate(-3px,2px) skewX(3deg);filter:hue-rotate(60deg)}
+  96%{transform:translate(3px,-2px) scale(1.02);filter:hue-rotate(-60deg)}
 }
-
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
 
-<!-- Breakcore Glitch Overlays -->
+<div class="splash" id="splash">
+  <span class="splash-text">Click Anywhere</span>
+</div>
+
+<div class="page-guard" id="pageGuard"></div>
+
 <div class="glitch-overlay black-flicker" aria-hidden="true"></div>
 <div class="glitch-overlay chromatic-flicker" aria-hidden="true"></div>
 <div class="glitch-overlay h-scanlines" aria-hidden="true"></div>
@@ -427,16 +366,7 @@ a,button{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user
 
     <h1 class="name">crss5G</h1>
 
-    <div class="badges">
-      <span class="badge" title="Developer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="14" height="14"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
-      <span class="badge" title="ROM Maintainer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="14" height="14"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>
-      <span class="badge" title="Security"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="14" height="14"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
-      <span class="badge" title="Star"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="14" height="14"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
-      <span class="badge" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="14" height="14"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
-      <span class="badge" title="InfinityX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="14" height="14"><path d="M6 3h12l4 6-10 13L2 9 6 3z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><line x1="2" y1="9" x2="22" y2="9"/></svg></span>
-    </div>
-
-    <p class="bio">Low-level Android dev. maintain unofficial InfinityX ROM for the Xiaomi Pad 5 (nabu)</p>
+    <p class="bio" id="bio"><span class="bio-cursor"></span></p>
 
     <nav class="social-grid" aria-label="Social links">
       <a href="https://github.com/hxfuxyy" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="GitHub">
@@ -447,7 +377,7 @@ a,button{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user
         <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
         <span>Telegram</span>
       </a>
-      <a href="https://tiktok.com/@snapdragon" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="TikTok">
+      <a href="https://tiktok.com/@snаpdrаgоn" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="TikTok">
         <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.79a8.18 8.18 0 0 0 4.77 1.52V6.88a4.85 4.85 0 0 1-1-.19z"/></svg>
         <span>TikTok</span>
       </a>
@@ -456,7 +386,7 @@ a,button{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user
     <a href="https://github.com/hxfuxyy" target="_blank" rel="noopener noreferrer" class="gh-card">
       <div class="gh-card-left">
         <div class="gh-username">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" style="vertical-align: middle;"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
           <span>crss5G</span>
         </div>
         <div class="gh-stat-list">
@@ -479,22 +409,22 @@ a,button{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user
           <svg viewBox="0 0 160 80" preserveAspectRatio="none">
             <defs>
               <linearGradient id="chartGrad" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stop-color="#c040ff" />
-                <stop offset="50%" stop-color="#00ffcc" />
-                <stop offset="100%" stop-color="#ff2060" />
+                <stop offset="0%" stop-color="#c040ff"/>
+                <stop offset="50%" stop-color="#00ffcc"/>
+                <stop offset="100%" stop-color="#ff2060"/>
               </linearGradient>
               <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#c040ff" stop-opacity="0.2" />
-                <stop offset="100%" stop-color="#c040ff" stop-opacity="0.0" />
+                <stop offset="0%" stop-color="#c040ff" stop-opacity="0.2"/>
+                <stop offset="100%" stop-color="#c040ff" stop-opacity="0.0"/>
               </linearGradient>
             </defs>
-            <line x1="0" y1="20" x2="160" y2="20" stroke="rgba(255,255,255,0.04)" stroke-width="0.5" />
-            <line x1="0" y1="40" x2="160" y2="40" stroke="rgba(255,255,255,0.04)" stroke-width="0.5" />
-            <line x1="0" y1="60" x2="160" y2="60" stroke="rgba(255,255,255,0.04)" stroke-width="0.5" />
-            <path d="M 0 80 Q 20 65 40 72 T 80 48 T 120 22 T 160 60 L 160 80 Z" fill="url(#areaGrad)" />
-            <path class="gh-chart-path" d="M 0 80 Q 20 65 40 72 T 80 48 T 120 22 T 160 60" fill="none" stroke="url(#chartGrad)" stroke-width="2" stroke-linecap="round" />
-            <circle cx="80" cy="48" r="2.5" fill="#00ffcc" />
-            <circle cx="120" cy="22" r="2.5" fill="#ff2060" />
+            <line x1="0" y1="20" x2="160" y2="20" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+            <line x1="0" y1="40" x2="160" y2="40" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+            <line x1="0" y1="60" x2="160" y2="60" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+            <path d="M 0 80 Q 20 65 40 72 T 80 48 T 120 22 T 160 60 L 160 80 Z" fill="url(#areaGrad)"/>
+            <path class="gh-chart-path" d="M 0 80 Q 20 65 40 72 T 80 48 T 120 22 T 160 60" fill="none" stroke="url(#chartGrad)" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="80" cy="48" r="2.5" fill="#00ffcc"/>
+            <circle cx="120" cy="22" r="2.5" fill="#ff2060"/>
           </svg>
         </div>
         <div class="gh-chart-label">contributions last year</div>
@@ -503,14 +433,17 @@ a,button{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user
 
     <div class="player-card">
       <button class="player-vol" id="playerVol" aria-label="Toggle mute">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
           <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
           <path id="volWave1" d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
           <path id="volWave2" d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
         </svg>
       </button>
-      <div class="player-info">
-        <span class="player-track">MadK1d — 1 мая</span>
+      <div class="player-main">
+        <div class="player-meta">
+          <span class="player-date">MadK1d</span>
+          <span class="player-track">1 мая</span>
+        </div>
         <div class="player-bar-wrap">
           <span class="player-time" id="playerTime">0:00</span>
           <div class="player-bar" id="playerBar">
@@ -522,13 +455,13 @@ a,button{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user
       </div>
       <div class="player-controls">
         <button class="player-btn" id="playerPrev" aria-label="Prev">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2"/></svg>
         </button>
         <button class="player-btn player-play" id="playerPlay" aria-label="Play/Pause">
-          <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         </button>
         <button class="player-btn" id="playerNext" aria-label="Next">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2"/></svg>
         </button>
       </div>
     </div>
@@ -552,8 +485,10 @@ const playerPrev=$("#playerPrev"),playerNext=$("#playerNext"),playerVol=$("#play
 const playerBar=$("#playerBar"),playerProg=$("#playerProg"),playerThumb=$("#playerThumb");
 const playerTime=$("#playerTime"),playerDur=$("#playerDur");
 const volWave1=$("#volWave1"),volWave2=$("#volWave2");
+const splash=$("#splash");
+const pageGuard=$("#pageGuard");
+const bioEl=$("#bio");
 
-/* --- Cursor --- */
 let mX=window.innerWidth/2,mY=window.innerHeight/2,dX=mX,dY=mY,rX=mX,rY=mY,rafC;
 function tickCursor(){
   dX+=(mX-dX)*.92;dY+=(mY-dY)*.92;rX+=(mX-rX)*.12;rY+=(mY-rY)*.12;
@@ -564,12 +499,14 @@ function tickCursor(){
 document.addEventListener("mousemove",e=>{mX=e.clientX;mY=e.clientY;});
 document.addEventListener("mouseenter",()=>{if(cursorDot)cursorDot.style.opacity="1";if(cursorRing)cursorRing.style.opacity=".6";});
 document.addEventListener("mouseleave",()=>{if(cursorDot)cursorDot.style.opacity="0";if(cursorRing)cursorRing.style.opacity="0";});
-const HS="a,button,.social-btn,.player-btn,.player-vol,.avatar,.badge";
+const HS="a,button,.social-btn,.player-btn,.player-vol,.avatar";
 document.addEventListener("mouseover",e=>{if(e.target.closest(HS))document.body.classList.add("chov");});
 document.addEventListener("mouseout",e=>{if(e.target.closest(HS))document.body.classList.remove("chov");});
 if(cursorDot||cursorRing)tickCursor();
-const blob1=document.querySelector(".bg-glow-1"),blob2=document.querySelector(".bg-glow-2"),blob3=document.querySelector(".bg-glow-3");
-const cx=window.innerWidth/2,cy=window.innerHeight/2;let ptick=false;
+
+const blob1=$(".bg-glow-1"),blob2=$(".bg-glow-2"),blob3=$(".bg-glow-3");
+const cx=window.innerWidth/2,cy=window.innerHeight/2;
+let ptick=false;
 window.addEventListener("mousemove",e=>{
   if(ptick)return;ptick=true;
   requestAnimationFrame(()=>{
@@ -581,7 +518,70 @@ window.addEventListener("mousemove",e=>{
   });
 });
 
-/* --- Audio Player --- */
+const bioLines=[
+  "Low-level Android dev",
+  "maintain ROMs for Xiaomi Pad 5",
+  "nabunabunabu!!!",
+  "love nicotine"
+];
+let bioLineIdx=0,bioTypedLen=0,bioPhase="typing",bioTimer=null;
+
+function getBioTextNode(){
+  for(const n of bioEl.childNodes){
+    if(n.nodeType===3)return n;
+  }
+  const t=document.createTextNode("");
+  bioEl.insertBefore(t,bioEl.firstChild);
+  return t;
+}
+
+function getBioCursor(){
+  return bioEl.querySelector(".bio-cursor");
+}
+
+function bioStep(){
+  const line=bioLines[bioLineIdx];
+  const textNode=getBioTextNode();
+  if(bioPhase==="typing"){
+    if(bioTypedLen<line.length){
+      bioTypedLen++;
+      textNode.textContent=line.slice(0,bioTypedLen);
+      bioTimer=setTimeout(bioStep,30+(Math.random()*18));
+    } else {
+      bioPhase="pause";
+      bioTimer=setTimeout(bioStep,1600);
+    }
+  } else if(bioPhase==="pause"){
+    bioPhase="erasing";
+    bioTimer=setTimeout(bioStep,40);
+  } else if(bioPhase==="erasing"){
+    if(bioTypedLen>0){
+      bioTypedLen--;
+      textNode.textContent=line.slice(0,bioTypedLen);
+      bioTimer=setTimeout(bioStep,22+(Math.random()*12));
+    } else {
+      bioLineIdx=(bioLineIdx+1)%bioLines.length;
+      bioPhase="typing";
+      bioTimer=setTimeout(bioStep,260);
+    }
+  }
+}
+
+function startBio(){
+  const cursor=getBioCursor();
+  bioEl.innerHTML="";
+  const textNode=document.createTextNode("");
+  bioEl.appendChild(textNode);
+  if(cursor)bioEl.appendChild(cursor);
+  else{
+    const c=document.createElement("span");
+    c.className="bio-cursor";
+    bioEl.appendChild(c);
+  }
+  bioLineIdx=0;bioTypedLen=0;bioPhase="typing";
+  bioTimer=setTimeout(bioStep,400);
+}
+
 let isPlaying=false,isMuted=false;
 bgAudio.volume=0.55;
 
@@ -602,24 +602,23 @@ function togglePlay(){
 }
 playerPlay.addEventListener("click",togglePlay);
 
-/* Auto-play on first interaction */
-let firstInteraction=false;
-function onFirstInteraction(){
-  if(firstInteraction)return;
-  firstInteraction=true;
-  bgAudio.play().then(()=>{isPlaying=true;setPlayIcon(true);}).catch(()=>{});
-  document.removeEventListener("click",onFirstInteraction);
-  document.removeEventListener("keydown",onFirstInteraction);
-  document.removeEventListener("touchstart",onFirstInteraction);
+let splashDone=false;
+function dismissSplash(){
+  if(splashDone)return;
+  splashDone=true;
+  splash.classList.add("hidden");
+  setTimeout(()=>{
+    splash.style.display="none";
+    pageGuard.classList.add("off");
+    startBio();
+    bgAudio.play().then(()=>{isPlaying=true;setPlayIcon(true);}).catch(()=>{});
+  },700);
 }
-document.addEventListener("click",onFirstInteraction);
-document.addEventListener("keydown",onFirstInteraction);
-document.addEventListener("touchstart",onFirstInteraction);
+splash.addEventListener("click",dismissSplash);
+document.addEventListener("keydown",dismissSplash);
+document.addEventListener("touchstart",dismissSplash,{passive:true});
 
-bgAudio.addEventListener("loadedmetadata",()=>{
-  playerDur.textContent=fmtTime(bgAudio.duration);
-});
-
+bgAudio.addEventListener("loadedmetadata",()=>{playerDur.textContent=fmtTime(bgAudio.duration);});
 bgAudio.addEventListener("timeupdate",()=>{
   const pct=bgAudio.duration?bgAudio.currentTime/bgAudio.duration:0;
   const w=Math.min(pct*100,100);
@@ -627,10 +626,7 @@ bgAudio.addEventListener("timeupdate",()=>{
   playerThumb.style.left=w+"%";
   playerTime.textContent=fmtTime(bgAudio.currentTime);
 });
-
-bgAudio.addEventListener("error",()=>{
-  playerDur.textContent="n/a";
-});
+bgAudio.addEventListener("error",()=>{playerDur.textContent="n/a";});
 
 playerBar.addEventListener("click",e=>{
   if(!bgAudio.duration)return;
@@ -649,7 +645,6 @@ playerVol.addEventListener("click",()=>{
 playerPrev.addEventListener("click",()=>{bgAudio.currentTime=0;});
 playerNext.addEventListener("click",()=>{bgAudio.currentTime=bgAudio.duration||0;});
 
-/* --- Ripple --- */
 $$(".social-btn").forEach(btn=>{
   btn.addEventListener("click",e=>{
     const r=btn.getBoundingClientRect();
@@ -662,23 +657,23 @@ $$(".social-btn").forEach(btn=>{
   });
 });
 
-/* --- GitHub Stats --- */
 function animCount(el,target,dur){
   if(!el)return;
   const t0=performance.now();
   (function step(now){
     const p=Math.min((now-t0)/dur,1);
-    const e=1-Math.pow(1-p,3);
-    const v=Math.round(target*e);
+    const ease=1-Math.pow(1-p,3);
+    const v=Math.round(target*ease);
     el.textContent=v>=1000?(v/1000).toFixed(1)+"k":String(v);
     if(p<1)requestAnimationFrame(step);
   })(t0);
 }
+
 async function loadGH(){
   try{
-    const ur=await fetch(`https://api.github.com/users/hxfuxyy`);
-    if(!ur.ok)throw new Error();
-    const u=await ur.json();
+    const res=await fetch("https://api.github.com/users/hxfuxyy");
+    if(!res.ok)throw new Error();
+    const u=await res.json();
     animCount(statRepos,u.public_repos,900);
     animCount(statContrib,60,1100);
   }catch(_){
